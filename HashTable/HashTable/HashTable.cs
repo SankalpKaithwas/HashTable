@@ -9,7 +9,7 @@ namespace HashTable
         readonly List<LinkedList<K, V>> bucketList;
         public HashTable(int size)
         {
-            this._size = size;
+            _size = size;
             bucketList = new List<LinkedList<K, V>>(size);
             for (int i = 0; i < _size; i++)
             {
@@ -50,6 +50,31 @@ namespace HashTable
             }
             else myMapNode.value = value;
         }
+        public void Remove(K key)
+        {
+            int position = GetBucketPosition(key);
+            LinkedList<K, V> linkedList = GetLinkedList(position);
+            if (linkedList == null)
+            {
+                Console.WriteLine("Nothing to delete");
+            }
+            else
+            {
+                linkedList.DeleteNode(key);
+            }
+        }
+
+        private LinkedList<K, V> GetLinkedList(int postion)
+        {
+            LinkedList<K, V> linkedList = bucketList[postion];
+            if (linkedList == null)
+            {
+                linkedList = new LinkedList<K, V>();
+                bucketList[postion] = linkedList;
+            }
+            return linkedList;
+        }
+
     }
 }
 
